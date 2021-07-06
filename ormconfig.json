@@ -4,7 +4,7 @@
    "port": 5432,
    "username": "postgres",
    "password": "postgres",
-   "database": "avaliacao2",
+   "database": "api-de-autentatica-o-multi-app_db_1",
    "synchronize": true,
    "logging": false,
    "entities": [

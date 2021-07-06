@@ -43,18 +43,7 @@ authRouter.post('/app/register', async (req,res) => {
         } catch(error){
 
         }
-        try{
-            secret === secret_saved
-            return res.status(500).json({message: STATUSAPP.INVALID_SECRET})
-        } catch(error){
-
-        }
-        try{
-            const savedApp = await authCtrl.registerApp(app)
-            return res.json(savedApp)
-        } catch(error){
-            return res.status(500).json({message: STATUSAPP.REGISTER_ERROR})
-        }
+        
     }else{
         return res.status(400).json({message: response})
     }

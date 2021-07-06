@@ -5,13 +5,13 @@ services:
         environment:
             POSTGRES_PASSWORD: postgres
             POSTGRES_USER: postgres
-            POSTGRES_DB: avaliacao2
+            POSTGRES_DB: api-de-autentatica-o-multi-app_db_1
         volumes:
             - ./pgdata:/var/lib/postgresql/data
         ports:
             - "5432:5432"
     app:
-        container_name: avaliacao2
+        container_name: api-de-autentatica-o-multi-app_db_1
         restart: always
         build: .
         ports:

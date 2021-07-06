@@ -1,4 +1,3 @@
-import { User } from './User';
 import {Entity, Column, ManyToMany, JoinTable, PrimaryGeneratedColumn } from "typeorm";
 
 export enum STATUSAPP {
@@ -12,11 +11,16 @@ export enum STATUSAPP {
 
 @Entity()
 export class App {
+    constructor(id_app: string, secret: string, expiresIn: string){
+        this.id_app = id_app
+        this.secret = secret
+        this.expiresIn = expiresIn
+    }
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ unique: true})
+    @Column()
     id_app: string
 
     @Column()
@@ -24,12 +28,6 @@ export class App {
 
     @Column()
     expiresIn: string;
-   
-    constructor(id_app: string, secret: string, expiresIn: string){
-        this.id_app = id_app
-        this.secret = secret
-        this.expiresIn = expiresIn
-    }
 
     isValid(): STATUSAPP {
         return STATUSAPP.OK

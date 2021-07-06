@@ -15,11 +15,17 @@ export enum STATUS {
 
 @Entity()
 export class User {
-
+    constructor(email: string, name: string, password: string){
+        this.email = email
+        this.name = name
+        this._password = password
+        this._genaratePassword()
+    }
+    
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ unique: true})
+    @Column()
     email: string;
 
     @Column()
@@ -36,13 +42,6 @@ export class User {
     hash: string;
 
     _password: string 
-
-    constructor(email: string, name: string, password: string){
-        this.email = email
-        this.name = name
-        this._password = password
-        this._genaratePassword()
-    }
 
     isValid(): STATUS {
         if(!validate(this.email)) {
