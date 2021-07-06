@@ -1,6 +1,7 @@
-import {Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, JoinTable, ManyToMany } from "typeorm";
 import { randomBytes, pbkdf2Sync} from 'crypto'
 import { validate } from 'email-validator'
+import { App } from "./App";
 
 export enum STATUS {
     INVALID_EMAIL = 'Invalid e-mail',
@@ -26,6 +27,10 @@ export class User {
 
     @Column()
     salt: string;
+
+    @ManyToMany(() => App)
+    @JoinTable()
+    apps: App[]
 
     @Column()
     hash: string;

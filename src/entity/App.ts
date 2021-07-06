@@ -5,6 +5,7 @@ export enum STATUSAPP {
     INVALID_SECRET = 'Invalid secret, this secret is already in use',
     OK = 'Secret successfully registered',
     INVALID_ID = 'The IDs do not match',
+    INVALID_ID_APP = 'The ID is already in use',
     NOT_AUTHORIZED = 'User not authorized',
     REGISTER_ERROR = 'App has not been registered'
 }
@@ -23,11 +24,6 @@ export class App {
 
     @Column()
     expiresIn: string;
-
-    @ManyToMany(() => User)
-    @JoinTable()
-    users: User[]
-
    
     constructor(id_app: string, secret: string, expiresIn: string){
         this.id_app = id_app
@@ -36,7 +32,6 @@ export class App {
     }
 
     isValid(): STATUSAPP {
-
         return STATUSAPP.OK
     }
 }

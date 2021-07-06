@@ -32,9 +32,23 @@ authRouter.post('/app/register', async (req,res) => {
 
     const app: App = new App(id_app, secret, expiresIn)
     const response =  app.isValid()
-
+    
     if(response == STATUSAPP.OK){
         const authCtrl = new AuthController()
+        const secret_saved = await authCtrl.findAppBySecreet(secret)
+        const idApp_saved = await authCtrl.findAppById(id_app)
+        try{
+            id_app === idApp_saved
+            return res.status(500).json({message: STATUSAPP.INVALID_ID_APP})
+        } catch(error){
+
+        }
+        try{
+            secret === secret_saved
+            return res.status(500).json({message: STATUSAPP.INVALID_SECRET})
+        } catch(error){
+
+        }
         try{
             const savedApp = await authCtrl.registerApp(app)
             return res.json(savedApp)
@@ -45,14 +59,15 @@ authRouter.post('/app/register', async (req,res) => {
         return res.status(400).json({message: response})
     }
 })
-
 authRouter.post('/app/associate', async (req,res) => {
     console.log('******** Associate ********')
     const { email, id_app} = req.body
     const authCtrl = new AuthController()
     const user = await authCtrl.findUserByEmail(email)
-    console.log(`Usuário: ${user}`)
-    authCtrl.associateUserToApp(id_app, user.email)
+    const app = await authCtrl.findAppById(id_app)
+    console.log(`***** USUÁRIO: ${user}`)
+    console.log(`***** APP: ${app}`)
+    authCtrl.associateUserToApp(id_app, user.id)
 })
 
 authRouter.post('/user/login', async (req, res) => {

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { getManager} from "typeorm"
+import { EntityManager, getManager} from "typeorm"
 import { verify } from 'jsonwebtoken'
 
 import { STATUS, User } from "../entity/User"
@@ -7,7 +7,7 @@ import { SECRET } from "../config/secret"
 import { App } from "../entity/App"
 
 export class AuthController {
-    entityManager: any
+    entityManager: EntityManager
 
     constructor() {
         this.entityManager = getManager()
@@ -25,19 +25,26 @@ export class AuthController {
     }
 
     async findUserByEmail(email: string): Promise<User> {
-        const user = await this.entityManager.findOne(User, { email: email })
+        const user = await this.entityManager.find(User, { email})
         console.log(user, 'encontrei o usuário')
         return user
     }
-    
-    async findAppById(id_app: string): Promise<App> {
-        const app = await this.entityManager.findOne(App, { id_app: id_app })
+
+    async findAppBySecreet(secret: string): Promise<App> {
+        const app = await this.entityManager.find(App, {secret})
         return app
     }
 
-    async associateUserToApp(id_app: string, id:string) {
-        await this.entityManager.updateOne(User, {id: id}, {apps: [id_app]})
-        await this.entityManager.updateOne(App, {id_app: id_app}, {users:[id]})
+    async findAppById(id_app: string): Promise<App> {
+        const app = await this.entityManager.find(App, { id_app})
+        return app
+    }
+
+    async associateUserToApp(id_app: string, id:number) {
+        console.log(id_app, 'ID APP')
+        console.log(id, 'ID USER')
+       // await this.entityManager.updateOne(User, {id: id}, {apps: [id_app]})
+       // await this.entityManager.updateOne(App, {id_app: id_app}, {users:[id]})
     }
 
     static verifyToken(req: Request, res: Response, next: NextFunction) {
