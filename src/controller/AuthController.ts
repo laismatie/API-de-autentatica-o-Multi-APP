@@ -13,7 +13,7 @@ export class AuthController {
         console.log("Entrei Register User ", user)
         try {
             const savedUser = await getManager().save(user)
-            console.log("Entrei no saveUser ", savedUser)
+            await console.log("Entrei no saveUser ", savedUser)
             return savedUser
         } catch (error) {
             console.log(error)
@@ -23,7 +23,6 @@ export class AuthController {
 
     async findUserByEmail(email: string): Promise<User> {
         const user = await getManager().findOne(User, email)
-        console.log(user, 'encontrei o usuário')
         return user
     }
 
@@ -37,13 +36,14 @@ export class AuthController {
         return app
     }
 
-    async associateUserToApp(id_app: string, id:number) {
-        console.log(id_app, 'ID APP')
-        console.log(id,'ID USER')
+    async associateUserToApp(user: User, app: App) {
+        console.log(user, 'APP')
+        console.log(app,'USER')
     }
 
     static verifyToken(req: Request, res: Response, next: NextFunction) {
         let token = req.headers['authorization']
+        
         if (token) {
             token = token.substring(7, token.length)
 

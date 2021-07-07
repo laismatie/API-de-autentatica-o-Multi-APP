@@ -1,10 +1,10 @@
 {
    "type": "postgres",
-   "host": "db",
+   "host": "localhost",
    "port": 5432,
    "username": "postgres",
    "password": "postgres",
-   "database": "api-de-autentatica-o-multi-app_db_1",
+   "database": "authdb",
    "synchronize": true,
    "logging": false,
    "entities": [

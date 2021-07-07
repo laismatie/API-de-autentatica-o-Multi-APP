@@ -35,7 +35,6 @@ authRouter.post('/app/register', async (req,res) => {
     
     if(response == STATUSAPP.OK){
         const authCtrl = new AuthController()
-        const secret_saved = await authCtrl.findAppBySecreet(secret)
         const idApp_saved = await authCtrl.findAppById(id_app)
         try{
             id_app === idApp_saved
@@ -49,14 +48,14 @@ authRouter.post('/app/register', async (req,res) => {
     }
 })
 authRouter.post('/app/associate', async (req,res) => {
-    console.log('******** Associate ********')
     const { email, id_app} = req.body
     const authCtrl = new AuthController()
     const user = await authCtrl.findUserByEmail(email)
     const app = await authCtrl.findAppById(id_app)
+    console.log('******** Associate ********')
     console.log(`***** USUÁRIO: ${user}`)
     console.log(`***** APP: ${app}`)
-    authCtrl.associateUserToApp(id_app, user.id)
+    authCtrl.associateUserToApp(user,app)
 })
 
 authRouter.post('/user/login', async (req, res) => {
