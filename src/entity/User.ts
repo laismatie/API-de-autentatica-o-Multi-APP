@@ -34,9 +34,9 @@ export class User {
     @Column()
     salt: string;
 
-    @ManyToMany(type => App)
+    @ManyToMany(type => App, app => app.id_app)
     @JoinTable()
-    apps: App[];
+    app: App[];
 
     @Column()
     hash: string;

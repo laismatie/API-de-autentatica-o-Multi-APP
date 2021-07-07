@@ -4,12 +4,12 @@
    "port": 5432,
    "username": "postgres",
    "password": "postgres",
-   "database": "authdb",
-   "synchronize": true,
+   "database": "authenticator",
    "logging": false,
    "entities": [
       "src/entity/**/*.ts"
    ],
+   "synchronize": true,
    "migrations": [
       "src/migration/**/*.ts"
    ],

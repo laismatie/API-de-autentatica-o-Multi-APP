@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import {getManager} from "typeorm"
+import {getConnection, getManager} from "typeorm"
 import { verify } from 'jsonwebtoken'
 
 import { STATUS, User } from "../entity/User"
@@ -39,6 +39,7 @@ export class AuthController {
     async associateUserToApp(user: User, app: App) {
         console.log(user, 'APP')
         console.log(app,'USER')
+        await getConnection().createQueryBuilder().relation(User, "apps").of(user).add(app);
     }
 
     static verifyToken(req: Request, res: Response, next: NextFunction) {
